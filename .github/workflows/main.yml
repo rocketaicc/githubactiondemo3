@@ -64,7 +64,7 @@ jobs:
             rm -f deploy.tar
             export PATH=$PATH:~/.local/bin
             coscmd download deploy.tar deploy.tar
-            tar --overwrite -xvf deploy.tar
+            tar --overwrite -xvf deploy.tar -q
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node
