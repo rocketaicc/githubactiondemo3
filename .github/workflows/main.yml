@@ -1,4 +1,4 @@
-name: CD
+name: Deploy
 
 on:
   push:
@@ -69,4 +69,4 @@ jobs:
             source ~/.nvm/nvm.sh
             export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node
             pnpm i
-            pm2 reload actiondemo3 -y
+            pm2 reload actiondemo3
