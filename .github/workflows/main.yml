@@ -53,17 +53,19 @@ jobs:
           bucket: github-action-1315390229
           region: ap-shanghai
       
-      # - name: Restart Services(PM2 Reload)
-      #   uses: appleboy/ssh-action@master
-      #   with: 
-      #     host: ${{ secrets.REMOTE_HOST }}
-      #     username: ${{ secrets.REMOTE_USERNAME }}
-      #     key: ${{ secrets.PRIVATE_KEY }}
-      #     script: |
-      #       cd /home/ubuntu/ws/actiondemoe03
-
-      #       export NVM_DIR=~/.nvm
-      #       source ~/.nvm/nvm.sh
-      #       export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node
-      #       pnpm i
-      #       pm2 reload actiondemo3
+      - name: Restart Services(PM2 Reload)
+        uses: appleboy/ssh-action@master
+        with: 
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu/ws/actiondemoe03
+            coscmd download deploy.tar deploy.tar
+            tar --overwrite -xvf deploy.tar
+            rm -f deploy.tar
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node
+            pnpm i
+            pm2 reload actiondemo3
