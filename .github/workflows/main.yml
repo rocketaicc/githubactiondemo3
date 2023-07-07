@@ -10,30 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install
-      - name: Build
-        run: npm run build --if-present
+      # - uses: actions/checkout@v3
+      # - uses: pnpm/action-setup@v2
+      #   with:
+      #     version: 8
+      # - name: Use Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 18
+      #     cache: 'pnpm'
+      # - name: Install dependencies
+      #   run: pnpm install
+      # - name: Build
+      #   run: npm run build --if-present
 
-      - name: Compress action step
-        uses: a7ul/tar-action@v1.1.0
-        id: compress
-        with:
-          command: c
-          files: |
-            .next/
-            public/
-            package.json
-          outPath: deploy.tar
+      # - name: Compress action step
+      #   uses: a7ul/tar-action@v1.1.0
+      #   id: compress
+      #   with:
+      #     command: c
+      #     files: |
+      #       .next/
+      #       public/
+      #       package.json
+      #     outPath: deploy.tar
 
       # - name: Upload to Server
       #   uses: appleboy/scp-action@master
@@ -44,14 +44,14 @@ jobs:
       #     source: ".next/,public/,package.json"
       #     target: "/home/ubuntu/ws/actiondemoe03"
 
-      - name: Upload COS
-        uses: zkqiang/tencent-cos-action@v0.1.0
-        with:
-          args: delete -r -f / && upload ./deploy.tar /
-          secret_id: ${{ secrets.SECRET_ID }}
-          secret_key: ${{ secrets.SECRET_KEY }}
-          bucket: github-action-1315390229
-          region: ap-shanghai
+      # - name: Upload COS
+      #   uses: zkqiang/tencent-cos-action@v0.1.0
+      #   with:
+      #     args: delete -r -f / && upload ./deploy.tar /
+      #     secret_id: ${{ secrets.SECRET_ID }}
+      #     secret_key: ${{ secrets.SECRET_KEY }}
+      #     bucket: github-action-1315390229
+      #     region: ap-shanghai
       
       - name: Restart Services(PM2 Reload)
         uses: appleboy/ssh-action@master
@@ -61,6 +61,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/ws/actiondemoe03
+            export PATH=$PATH:~/.local/bin
             coscmd download deploy.tar deploy.tar
             tar --overwrite -xvf deploy.tar
             rm -f deploy.tar
