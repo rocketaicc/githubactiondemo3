@@ -35,6 +35,5 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/ws/actiondemoe03
-            source ~/.bashrc
-            /www/server/nvm/versions/node/v18.16.1/bin/npm i
-            /www/server/nvm/versions/node/v18.16.1/bin/pm2 reload actiondemo3
+            npm i
+            pm2 reload actiondemo3
