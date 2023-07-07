@@ -17,3 +17,23 @@ jobs:
           node-version: '18.x'
       - run: npm install
       - run: npm run build --if-present
+
+      - name: Upload to Server
+        uses: appleboy/scp-action@master
+        with: 
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          source: ".next/,public/,package.json"
+          target: "/home/ubuntu/ws/actiondemoe03"
+      
+      - name: Server Reload
+        uses: appleboy/ssh-action@master
+        with: 
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu/ws/actiondemoe03
+            npm i
+            pm2 reload actiondemo3
