@@ -61,10 +61,10 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/ws/actiondemoe03
+            rm -f deploy.tar
             export PATH=$PATH:~/.local/bin
             coscmd download deploy.tar deploy.tar
             tar --overwrite -xvf deploy.tar
-            rm -f deploy.tar
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node
