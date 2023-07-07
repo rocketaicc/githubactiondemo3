@@ -36,7 +36,7 @@ jobs:
       - name: Upload COS
         uses: zkqiang/tencent-cos-action@v0.1.0
         with:
-          args: delete -r -f / && upload -rs ./.next/ / && upload -rs ./public/ / && upload ./package.json /
+          args: delete -r -f / && upload -r ./public/ / && upload -rs .next/ / && upload ./package.json /
           secret_id: ${{ secrets.SECRET_ID }}
           secret_key: ${{ secrets.SECRET_KEY }}
           bucket: github-action-1315390229
