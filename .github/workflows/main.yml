@@ -37,5 +37,6 @@ jobs:
             cd /home/ubuntu/ws/actiondemoe03
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            npm i
+            export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node
+            pnpm i
             pm2 reload actiondemo3
